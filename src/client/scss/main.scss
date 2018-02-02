@@ -1,0 +1,27 @@
+@import "colors";
+@import "fonts";
+
+@import "atoms/buttons";
+@import "atoms/spinner";
+
+@import "molecules/panels";
+
+html {
+    font-size: 8px; // Set 1 rem to 8px
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    @include main-font();
+    background: linear-gradient(135deg, $color-orange-bg-start 0%, $color-orange-bg-end 100%);
+    width: 100vw;
+    height: 100vh;
+}
+
+.app-wrapper {
+    height: 100vh;
+    align-items: center;
+    justify-content: center;
+    display: flex;
+}
