@@ -1,2 +1,254 @@
-.spinner{width:500px;margin-left:auto;margin-right:auto}.spinner .sk-cube-grid{width:40px;height:40px;margin:12px auto}.spinner .sk-cube-grid .sk-cube{width:33%;height:33%;background-color:#536167;float:left;-webkit-animation:sk-cubeGridScaleDelay 1.3s infinite ease-in-out;animation:sk-cubeGridScaleDelay 1.3s infinite ease-in-out;margin-top:-1px}.spinner .sk-cube-grid .sk-cube1{-webkit-animation-delay:.2s;animation-delay:.2s}.spinner .sk-cube-grid .sk-cube2{-webkit-animation-delay:.3s;animation-delay:.3s}.spinner .sk-cube-grid .sk-cube3{-webkit-animation-delay:.4s;animation-delay:.4s}.spinner .sk-cube-grid .sk-cube4{-webkit-animation-delay:.1s;animation-delay:.1s}.spinner .sk-cube-grid .sk-cube5{-webkit-animation-delay:.2s;animation-delay:.2s}.spinner .sk-cube-grid .sk-cube6{-webkit-animation-delay:.3s;animation-delay:.3s}.spinner .sk-cube-grid .sk-cube7{-webkit-animation-delay:0s;animation-delay:0s}.spinner .sk-cube-grid .sk-cube8{-webkit-animation-delay:.1s;animation-delay:.1s}.spinner .sk-cube-grid .sk-cube9{-webkit-animation-delay:.2s;animation-delay:.2s}@-webkit-keyframes sk-cubeGridScaleDelay{0%,70%,to{-webkit-transform:scale3D(1,1,1);transform:scale3D(1,1,1)}35%{-webkit-transform:scale3D(0,0,1);transform:scale3D(0,0,1)}}@keyframes sk-cubeGridScaleDelay{0%,70%,to{-webkit-transform:scale3D(1,1,1);transform:scale3D(1,1,1)}35%{-webkit-transform:scale3D(0,0,1);transform:scale3D(0,0,1)}}.panel{background-color:#fff;box-shadow:0 1rem 2rem 0 rgba(0,0,0,.3);padding:5rem 4rem 4rem}.panel.main{max-width:1000px;width:100%;height:580px}html{font-size:8px}body{margin:0;padding:0;font-size:15px;font-family:Roboto,Arial,Helvetica Neue,Helvetica,sans-serif;font-weight:400;background:linear-gradient(135deg,#fd746c,#ff9068);width:100vw;height:100vh}.app-wrapper{height:100vh;-webkit-box-align:center;-ms-flex-align:center;align-items:center;-webkit-box-pack:center;-ms-flex-pack:center;justify-content:center;display:-webkit-box;display:-ms-flexbox;display:flex}
-/*# sourceMappingURL=styles.css.map*/
+.huge {
+  font-weight: 800;
+  font-size: 11rem;
+  color: #E99384;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+p {
+  color: #536066;
+}
+
+h1 {
+  font-weight: 800;
+  font-size: 4.5rem;
+  letter-spacing: -1px;
+  margin: 0;
+}
+
+h2 {
+  font-size: 3.5rem;
+}
+
+h3 {
+  font-size: 3rem;
+}
+
+p {
+  font-size: 1.75rem;
+}
+
+.spinner {
+  width: 500px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.spinner .sk-cube-grid {
+  width: 100px;
+  height: 100px;
+  margin: 12px auto;
+}
+
+.spinner .sk-cube-grid .sk-cube {
+  width: 33%;
+  height: 33%;
+  background-color: #536167;
+  float: left;
+  -webkit-animation: sk-cubeGridScaleDelay 1.3s infinite ease-in-out;
+  animation: sk-cubeGridScaleDelay 1.3s infinite ease-in-out;
+  margin-top: -1px;
+}
+
+.spinner .sk-cube-grid .sk-cube1 {
+  -webkit-animation-delay: 0.2s;
+  animation-delay: 0.2s;
+}
+
+.spinner .sk-cube-grid .sk-cube2 {
+  -webkit-animation-delay: 0.3s;
+  animation-delay: 0.3s;
+}
+
+.spinner .sk-cube-grid .sk-cube3 {
+  -webkit-animation-delay: 0.4s;
+  animation-delay: 0.4s;
+}
+
+.spinner .sk-cube-grid .sk-cube4 {
+  -webkit-animation-delay: 0.1s;
+  animation-delay: 0.1s;
+}
+
+.spinner .sk-cube-grid .sk-cube5 {
+  -webkit-animation-delay: 0.2s;
+  animation-delay: 0.2s;
+}
+
+.spinner .sk-cube-grid .sk-cube6 {
+  -webkit-animation-delay: 0.3s;
+  animation-delay: 0.3s;
+}
+
+.spinner .sk-cube-grid .sk-cube7 {
+  -webkit-animation-delay: 0s;
+  animation-delay: 0s;
+}
+
+.spinner .sk-cube-grid .sk-cube8 {
+  -webkit-animation-delay: 0.1s;
+  animation-delay: 0.1s;
+}
+
+.spinner .sk-cube-grid .sk-cube9 {
+  -webkit-animation-delay: 0.2s;
+  animation-delay: 0.2s;
+}
+
+@-webkit-keyframes sk-cubeGridScaleDelay {
+  0%, 70%, 100% {
+    -webkit-transform: scale3D(1, 1, 1);
+    transform: scale3D(1, 1, 1);
+  }
+
+  35% {
+    -webkit-transform: scale3D(0, 0, 1);
+    transform: scale3D(0, 0, 1);
+  }
+}
+
+@keyframes sk-cubeGridScaleDelay {
+  0%, 70%, 100% {
+    -webkit-transform: scale3D(1, 1, 1);
+    transform: scale3D(1, 1, 1);
+  }
+
+  35% {
+    -webkit-transform: scale3D(0, 0, 1);
+    transform: scale3D(0, 0, 1);
+  }
+}
+
+.toggler input[type="checkbox"] {
+  display: none;
+}
+
+.toggler .toggle {
+  position: absolute;
+  top: 40px;
+  right: 32px;
+  margin: auto;
+  width: 80px;
+  height: 28px;
+}
+
+.toggler .toggle label,
+.toggler .toggle i {
+  box-sizing: border-box;
+  display: block;
+  background: #ffffff;
+}
+
+.toggler .toggle label {
+  width: 100%;
+  height: 100%;
+  border-radius: 32px;
+  border: 1px solid #536066;
+  transition: all 0.30s ease;
+}
+
+.toggler .toggle i {
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 30px;
+  height: 24px;
+  border-radius: 24px;
+  border: 1px solid #536066;
+  background: #ffffff;
+  transition: all 0.3s cubic-bezier(0.275, -0.45, 0.725, 1.45);
+}
+
+.toggler .toggle .f {
+  display: block;
+  position: absolute;
+  right: 12px;
+  opacity: 1;
+}
+
+.toggler .toggle .c {
+  display: block;
+  position: absolute;
+  left: 12px;
+  opacity: 0;
+}
+
+.toggler .toggle .c,
+.toggler .toggle .f {
+  font-size: 12px;
+  font-weight: bold;
+  transition: opacity 0.1s;
+  transition-delay: 0.1s;
+  top: 7px;
+}
+
+.toggler input[type="checkbox"]:active + .toggle i {
+  width: 35px;
+}
+
+.toggler input[type="checkbox"]:active + .toggle label {
+  border: 14px solid #e5e5e5;
+}
+
+.toggler input[type="checkbox"]:checked + .toggle i {
+  left: 48px;
+}
+
+.toggler input[type="checkbox"]:checked + .toggle .f {
+  opacity: 0;
+}
+
+.toggler input[type="checkbox"]:checked + .toggle .c {
+  opacity: 1;
+}
+
+.toggler input[type="checkbox"]:checked:active + .toggle i {
+  left: 40px;
+}
+
+.toggler input[type="checkbox"]:checked:active + .toggle label {
+  border: 14px solid #e5e5e5;
+}
+
+.panel {
+  background-color: #FFFFFF;
+  box-shadow: 0 1rem 2rem 0 rgba(0, 0, 0, 0.3);
+  padding: 5rem 4rem 4rem;
+  max-width: 1000px;
+  width: 100%;
+  height: 580px;
+  position: relative;
+}
+
+html {
+  font-size: 8px;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-size: 15px;
+  font-family: "Roboto", Arial, "Helvetica Neue", Helvetica, sans-serif;
+  font-weight: 400;
+  background: linear-gradient(135deg, #FD746C 0%, #FF9068 100%);
+  width: 100vw;
+  height: 100vh;
+}
+
+.app-wrapper {
+  height: 100vh;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+

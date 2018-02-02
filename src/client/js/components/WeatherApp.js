@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import Panel from "./Panel";
+import MainPanel from "./MainPanel";
+import LocationPanel from "./LocationPanel";
 
 // const mapStateToProps = () => {};
 //
@@ -22,15 +23,19 @@ class WeatherApp extends Component {
         super(props);
 
         this.state = {
-            measurementSystem: 'c',
+            showLocationPanel: false,
         };
     }
 
     render() {
+        if (this.state.showLocationPanel) {
+            return (
+                <LocationPanel />
+            );
+        }
+
         return (
-            <Panel classes="main">
-                Hello world!
-            </Panel>
+            <MainPanel />
         );
     }
 }

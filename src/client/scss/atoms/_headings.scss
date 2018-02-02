@@ -1,0 +1,29 @@
+.huge {
+    font-weight: 800;
+    font-size: 11rem;
+    color: $color-orange-text;
+}
+
+h1, h2, h3, h4, h5, p {
+    color: $color-gray-text;
+}
+
+h1 {
+    font-weight: 800;
+    font-size: 4.5rem;
+    letter-spacing: -1px;
+    margin: 0;
+}
+
+h2 {
+    font-size: 3.5rem;
+}
+
+h3 {
+    font-size: 3rem;
+}
+
+p {
+    font-size: 1.75rem;
+}
+
