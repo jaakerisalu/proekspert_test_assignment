@@ -1,11 +1,21 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { setMeasurementSystem } from "../ducks/weather";
 
-const MeasurementToggle = ({ callback }) => {
+const mapStateToProps = state => ({
+    system: state.measurementSystem,
+});
+
+const mapDispatchToProps = dispatch => ({
+    setSystem: selection => dispatch(setMeasurementSystem(selection)),
+});
+
+const MeasurementToggle = ({ system, setSystem }) => {
     return (
         <div className="toggler">
-            <input type="checkbox" id="toggle_measurement_system" />
-            <div className="toggle" onClick={() => callback()}>
+            <input type="checkbox" id="toggle_measurement_system" checked={system === 'c'} readOnly />
+            <div className="toggle" onClick={() => setSystem(system === 'c' ? 'f' : 'c')}>
                 <label htmlFor="toggle_measurement_system">
                     <i />
                     <span className="c">℃</span>
@@ -17,7 +27,17 @@ const MeasurementToggle = ({ callback }) => {
 };
 
 MeasurementToggle.propTypes = {
-    callback: PropTypes.func.isRequired,
+    setSystem: PropTypes.func.isRequired,
+    system: PropTypes.oneOf(['f', 'c']),
 };
 
-export default MeasurementToggle;
+MeasurementToggle.defaultProps = {
+    system: 'f',
+};
+
+const ToggleConnector = connect(
+    mapStateToProps,
+    mapDispatchToProps,
+)(MeasurementToggle);
+
+export default ToggleConnector;

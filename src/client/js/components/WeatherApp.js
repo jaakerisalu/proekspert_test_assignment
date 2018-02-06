@@ -35,7 +35,7 @@ class WeatherApp extends Component {
         }
 
         return (
-            <MainPanel />
+            <MainPanel togglePanel={() => this.setState({ showLocationPanel: true })} />
         );
     }
 }

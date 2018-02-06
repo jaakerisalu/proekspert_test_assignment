@@ -2,6 +2,7 @@ const initialState = {
     isLoading: true,
     error: null,
     weatherData: [],
+    measurementSystem: 'f',
 };
 
 const weatherReducer = (state = initialState, action) => {
@@ -18,6 +19,11 @@ const weatherReducer = (state = initialState, action) => {
                 ...state,
                 isLoading: action.status,
             };
+        case 'SET_SYSTEM':
+            return {
+                ...state,
+                measurementSystem: action.system,
+            };
         default:
             return state;
     }
@@ -27,6 +33,7 @@ const weatherReducer = (state = initialState, action) => {
 const setError = (statusCode, message) => ({ type: 'SET_ERROR', statusCode, message });
 const setLoading = status => ({ type: 'SET_LOADING', status });
 const setData = data => ({ type: 'SET_DATA', data });
+export const setMeasurementSystem = system => ({ type: 'SET_SYSTEM', system });
 
 export const fetchWeatherData = () => (dispatch) => {
     dispatch(setLoading(true));
