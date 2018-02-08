@@ -2656,6 +2656,60 @@ p {
   border: 14px solid #e5e5e5;
 }
 
+.geolocation {
+  margin-top: 3rem;
+  font-size: 3rem;
+  text-align: center;
+}
+
+.geolocation .use-geolocation span {
+  border-bottom: 2px dashed #CBCBCB;
+  cursor: pointer;
+}
+
+.geolocation .use-geolocation span.disabled {
+  cursor: not-allowed;
+}
+
+.geolocation .use-geolocation .geo-error {
+  font-size: 2rem;
+  color: #536167;
+}
+
+.google-autocomplete {
+  width: 100%;
+  max-width: 500px;
+  position: relative;
+  margin-bottom: 4rem;
+}
+
+.google-autocomplete:after {
+  content: "";
+  background-image: url(data:image/svg+xml;base64,PHN2ZyBmaWxsPSIjNzc3Nzc3IiBoZWlnaHQ9IjI0IiB2aWV3Qm94PSIwIDAgMjQgMjQiIHdpZHRoPSIyNCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KICAgIDxwYXRoIGQ9Ik0xNS41IDE0aC0uNzlsLS4yOC0uMjdDMTUuNDEgMTIuNTkgMTYgMTEuMTEgMTYgOS41IDE2IDUuOTEgMTMuMDkgMyA5LjUgM1MzIDUuOTEgMyA5LjUgNS45MSAxNiA5LjUgMTZjMS42MSAwIDMuMDktLjU5IDQuMjMtMS41N2wuMjcuMjh2Ljc5bDUgNC45OUwyMC40OSAxOWwtNC45OS01em0tNiAwQzcuMDEgMTQgNSAxMS45OSA1IDkuNVM3LjAxIDUgOS41IDUgMTQgNy4wMSAxNCA5LjUgMTEuOTkgMTQgOS41IDE0eiIvPgogICAgPHBhdGggZD0iTTAgMGgyNHYyNEgweiIgZmlsbD0ibm9uZSIvPgo8L3N2Zz4K);
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  width: 40px;
+  height: 40px;
+  display: block;
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+
+.google-autocomplete .places-input {
+  border: 0 none;
+  border-bottom: 2px solid black;
+  width: 100%;
+  height: 5rem;
+  position: relative;
+  font-size: 5rem;
+  text-align: center;
+  background-color: transparent;
+  color: #536167;
+  font-weight: 500;
+}
+
 .panel {
   background-color: #FFFFFF;
   box-shadow: 0 1rem 2rem 0 rgba(0, 0, 0, 0.3);
@@ -2664,6 +2718,24 @@ p {
   width: 100%;
   height: 580px;
   position: relative;
+}
+
+.panel.location {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  font-size: 2rem;
+  color: #536066;
 }
 
 html {

@@ -30,6 +30,9 @@
         "no-warning-comments": ["warn", {"location": "anywhere"}],
 
         // Allow .js to as JSX files
-        "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }]
+        "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
+
+        // I enjoy the flexibility of ternaries
+        "no-nested-ternary": "off"
     }
 }

@@ -1,0 +1,22 @@
+.geolocation {
+    margin-top: 3rem;
+    font-size: 3rem;
+    text-align: center;
+
+    .use-geolocation {
+        span {
+            border-bottom: 2px dashed #CBCBCB;
+            cursor: pointer;
+
+            &.disabled {
+                cursor: not-allowed;
+            }
+        }
+
+        .geo-error {
+            font-size: 2rem;
+            color: $color-gray-text-muted;
+        }
+    }
+
+}

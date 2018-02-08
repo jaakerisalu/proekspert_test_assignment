@@ -4,7 +4,6 @@ import { connect } from 'react-redux';
 import MainPanel from "./MainPanel";
 import LocationPanel from "./LocationPanel";
 
-// const mapStateToProps = () => {};
 //
 // function mapDispatchToProps(dispatch) {
 //     // ({
@@ -14,9 +13,26 @@ import LocationPanel from "./LocationPanel";
 //     return () => {};
 // }
 //
-// @connect(mapStateToProps, mapDispatchToProps)
+const mapStateToProps = state => ({
+    location: state.location,
+});
+
+@connect(mapStateToProps, null)
 class WeatherApp extends Component {
     static propTypes = {
+        location: PropTypes.shape({
+            lat: PropTypes.number,
+            lon: PropTypes.number,
+            city: PropTypes.string,
+        }).isRequired,
+    };
+
+    static defaultProps = {
+        location: {
+            lat: 0,
+            lon: 0,
+            city: 'Unknown',
+        },
     };
 
     constructor(props) {
@@ -28,9 +44,12 @@ class WeatherApp extends Component {
     }
 
     render() {
+        console.log('RENDERING');
+        console.log(this.props.location);
+
         if (this.state.showLocationPanel) {
             return (
-                <LocationPanel />
+                <LocationPanel togglePanel={() => this.setState({ showLocationPanel: false })} />
             );
         }
 

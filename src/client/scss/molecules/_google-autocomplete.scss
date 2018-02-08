@@ -1,0 +1,33 @@
+.google-autocomplete {
+    width: 100%;
+    max-width: 500px;
+    position: relative;
+    margin-bottom: 4rem;
+
+    &:after {
+        content: "";
+        background-image: url('images/searchglass.svg');
+        background-size: contain;
+        background-repeat: no-repeat;
+        background-position: center;
+        width: 40px;
+        height: 40px;
+        display: block;
+        position: absolute;
+        top: 0;
+        right: 0;
+    }
+
+    .places-input {
+        border: 0 none;
+        border-bottom: 2px solid black;
+        width: 100%;
+        height: 5rem;
+        position: relative;
+        font-size: 5rem;
+        text-align: center;
+        background-color: transparent;
+        color: $color-gray-text-muted;
+        font-weight: 500;
+    }
+}
