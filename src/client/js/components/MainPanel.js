@@ -17,6 +17,7 @@ class MainPanel extends Component {
     componentDidMount() {
         const { lat, lon } = this.props.location;
         if (lat && lon) {
+            console.log('DOING THE FETCH', lat, lon);
             this.props.fetchWeatherData(lat, lon);
         }
     }

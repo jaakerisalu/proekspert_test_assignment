@@ -24,7 +24,7 @@ class LocationPanel extends Component {
 
     setGeoLocation() {
         this.props.setCoords(this.props.coords.latitude, this.props.coords.longitude).then(
-            this.props.togglePanel(),
+            () => this.props.togglePanel(),
         );
     }
 
@@ -34,7 +34,7 @@ class LocationPanel extends Component {
             .then((latLng) => {
                 this.setState({ error: '' });
                 this.props.setCoords(latLng.lat, latLng.lng).then(
-                    this.props.togglePanel(),
+                    () => this.props.togglePanel(),
                 );
             })
             .catch(error => this.setState({ error }));
