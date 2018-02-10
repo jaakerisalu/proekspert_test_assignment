@@ -4,15 +4,6 @@ import { connect } from 'react-redux';
 import MainPanel from "./MainPanel";
 import LocationPanel from "./LocationPanel";
 
-//
-// function mapDispatchToProps(dispatch) {
-//     // ({
-//     //     onLoad: () => { dispatch(fetchPeople()); },
-//     //     onSort: (list) => { dispatch(setPeople(list)); },
-//     // });
-//     return () => {};
-// }
-//
 const mapStateToProps = state => ({
     location: state.location,
 });
@@ -31,7 +22,7 @@ class WeatherApp extends Component {
         location: {
             lat: 0,
             lon: 0,
-            city: 'Unknown',
+            city: "",
         },
     };
 
@@ -43,10 +34,14 @@ class WeatherApp extends Component {
         };
     }
 
-    render() {
-        console.log('RENDERING');
-        console.log(this.props.location);
+    componentDidMount = () => {
+        // If city is unset, we ask the user to input their location first (INITIAL LOAD)
+        if (!this.props.location.city) {
+            this.setState({ showLocationPanel: true });
+        }
+    };
 
+    render() {
         if (this.state.showLocationPanel) {
             return (
                 <LocationPanel togglePanel={() => this.setState({ showLocationPanel: false })} />

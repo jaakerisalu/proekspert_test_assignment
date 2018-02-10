@@ -10,4 +10,6 @@ const server = http.createServer((req, res) => {
     handleStaticServe(req, res, done);
 });
 
-server.listen("8008");
+server.listen(8008, "127.0.0.1");
+
+console.log("Serving on 127.0.0.1:8008");

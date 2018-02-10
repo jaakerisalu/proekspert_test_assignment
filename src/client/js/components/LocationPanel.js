@@ -4,10 +4,10 @@ import PropTypes from 'prop-types';
 import { geolocated, geoPropTypes } from 'react-geolocated';
 import PlacesAutocomplete, { geocodeByAddress, getLatLng } from 'react-places-autocomplete';
 import Panel from "./Panel";
-import { setCoordinates } from "../ducks/weather";
+import { setCoordinatesWithCity } from "../ducks/weather";
 
 const mapDispatchToProps = dispatch => ({
-    setCoordinates: (lat, lon) => dispatch(setCoordinates(lat, lon)),
+    setCoords: (lat, lon) => dispatch(setCoordinatesWithCity(lat, lon)),
 });
 
 @connect(null, mapDispatchToProps)
@@ -23,8 +23,9 @@ class LocationPanel extends Component {
     }
 
     setGeoLocation() {
-        this.props.setCoordinates(this.props.coords.latitude, this.props.coords.longitude);
-        this.props.togglePanel();
+        this.props.setCoords(this.props.coords.latitude, this.props.coords.longitude).then(
+            this.props.togglePanel(),
+        );
     }
 
     setGooglePlacesLocation = (address) => {
@@ -32,8 +33,9 @@ class LocationPanel extends Component {
             .then(results => getLatLng(results[0]))
             .then((latLng) => {
                 this.setState({ error: '' });
-                this.props.setCoordinates(latLng.lat, latLng.lng);
-                this.props.togglePanel();
+                this.props.setCoords(latLng.lat, latLng.lng).then(
+                    this.props.togglePanel(),
+                );
             })
             .catch(error => this.setState({ error }));
     };

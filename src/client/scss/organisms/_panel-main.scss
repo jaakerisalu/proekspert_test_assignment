@@ -1,0 +1,127 @@
+.panel.main {
+    h1 {
+        margin-left: 8rem;
+    }
+
+    .today {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        align-items: center;
+
+        h2, h3 {
+          width: 100%;
+        }
+
+        h2 {
+           margin-bottom: 2rem;
+        }
+
+        h3 {
+           margin-top: 0;
+           margin-bottom: 2rem;
+        }
+
+        .huge {
+            display: inline-block;
+        }
+
+        i {
+            font-size: 16rem;
+            color: $color-orange-text;
+            margin-left: 6rem;
+            margin-right: 6rem;
+        }
+
+        .forecast {
+            display: inline-block;
+            text-transform: capitalize;
+            font-size: 3rem;
+            color: $color-orange-text;
+
+            div:not(:last-child) {
+                margin-bottom: 1rem;
+            }
+
+        }
+
+        @media (max-width: 800px) {
+            .huge {
+                font-size: 12rem;
+            }
+
+            i {
+                font-size: 10rem;
+                margin-right: 0;
+            }
+
+            .forecast {
+                width: 100%;
+            }
+        }
+    }
+
+    .future {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 10rem;
+
+        color: $color-gray-text;
+        font-size: 2rem;
+
+        .day {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+
+            i {
+                font-size: 6rem;
+                margin-top: 2rem;
+                margin-bottom: 2rem;
+            }
+        }
+
+    }
+
+    @media (max-width: 450px) {
+        margin-left: 0;
+        margin-right: 0;
+
+        .return {
+            left: 3rem;
+        }
+
+        h1 {
+            margin-left: 4rem;
+        }
+
+        .toggle {
+            top: 10px;
+        }
+
+        .today {
+            .huge {
+                font-size: 8rem;
+            }
+
+            i {
+                font-size: 6rem;
+            }
+        }
+
+        .future {
+            flex-wrap: wrap;
+            justify-content: space-around;
+
+            .day {
+                flex-direction: row;
+                justify-content: space-between;
+                align-items: center;
+                width: 100%;
+                border-top: 1px solid transparentize($color-orange-text, 0.7);
+            }
+        }
+
+    }
+}

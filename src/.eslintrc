@@ -33,6 +33,9 @@
         "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
 
         // I enjoy the flexibility of ternaries
-        "no-nested-ternary": "off"
+        "no-nested-ternary": "off",
+
+        // It turns out I'm also developing on windows @ home briefly
+        "linebreak-style": "off"
     }
 }

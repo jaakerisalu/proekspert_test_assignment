@@ -1,6 +1,6 @@
 .huge {
-    font-weight: 800;
-    font-size: 11rem;
+    font-weight: 400;
+    font-size: 15rem;
     color: $color-orange-text;
 }
 
@@ -17,11 +17,17 @@ h1 {
 }
 
 h2 {
-    font-size: 3.5rem;
+    font-size: 5rem;
+    font-weight: 300;
 }
 
 h3 {
-    font-size: 3rem;
+    font-size: 4rem;
+    font-weight: 300;
+
+    &:first-letter {
+        text-transform: capitalize;
+    }
 }
 
 p {

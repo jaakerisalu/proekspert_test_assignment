@@ -1,13 +1,16 @@
 /* global google */
 
+const OPEN_WEATHER_MAP_API_KEY = '51f38e774e8c2d2ddb78eed08bffdefa';  // Wouldn't do this in prod
+
 const initialState = {
     isLoading: true,
     error: null,
     weatherData: [],
     measurementSystem: 'f',
     location: {
-        lat: '',
-        lon: '',
+        lat: 0,
+        lon: 0,
+        city: "",
     },
 };
 
@@ -42,7 +45,10 @@ const weatherReducer = (state = initialState, action) => {
                 weatherData: action.data,
             };
         case 'SET_ERROR':
-            return [action.statusCode, action.message];
+            return {
+                ...state,
+                error: [action.statusCode, action.message],
+            };
         case 'SET_LOADING':
             return {
                 ...state,
@@ -53,15 +59,17 @@ const weatherReducer = (state = initialState, action) => {
                 ...state,
                 measurementSystem: action.system,
             };
-        case 'SET_COORDS':
+        case 'SET_COORDS': {
+            const { lat, lon, city } = action;
             return {
                 ...state,
                 location: {
-                    lat: action.lat,
-                    lon: action.lon,
-                    city: '#TODO',
+                    lat,
+                    lon,
+                    city,
                 },
             };
+        }
         default:
             return state;
     }
@@ -72,34 +80,45 @@ const setError = (statusCode, message) => ({ type: 'SET_ERROR', statusCode, mess
 const setLoading = status => ({ type: 'SET_LOADING', status });
 const setData = data => ({ type: 'SET_DATA', data });
 export const setMeasurementSystem = system => ({ type: 'SET_SYSTEM', system });
-export const setCoordinates = (lat, lon) => ({ type: 'SET_COORDS', lat, lon });
+export const setCoordinates = (lat, lon, city) => ({ type: 'SET_COORDS', lat, lon, city });
+// export const wipeLocation = () => ({ type: 'SET_COORDS', lat: 0, lon: 0, city: "" }); // Debug Action to clear state
 
-// export const setCoordinatesWithCity(lat, lon) {
-//   return function (dispatch) {
-//     return fetchcity().then(
-//       coords => dispatch(setCoordinates(coords)),
-//       error => dispatch(() => {});
-//     );
-//   };
-// }
+export const setCoordinatesWithCity = (lat, lon) => {
+    return function (dispatch) {
+        dispatch(setLoading(true));
+        return getCity(lat, lon).then(
+            (cityName) => {
+                dispatch(setCoordinates(lat, lon, cityName));
+                dispatch(setLoading(false));
+            },
+            (error) => {
+                dispatch(setError(error.statusCode, 'Failed to get city name'));
+                dispatch(setLoading(false));
+            },
+        );
+    };
+};
 
-export const fetchWeatherData = () => (dispatch) => {
-    dispatch(setLoading(true));
+export const fetchWeatherData = (lat, lon) => {
+    return function (dispatch) {
+        dispatch(setLoading(true));
+        try {
+            const apiUrl = 'http://api.openweathermap.org/data/2.5/forecast' +
+                `?lat=${lat}&lon=${lon}&APPID=${OPEN_WEATHER_MAP_API_KEY}&units=metric`;
+            fetch(apiUrl)
+                .then(res => res.json())
+                .then(
+                    (jsonResult) => {
+                        dispatch(setData(jsonResult.list));
+                        dispatch(setLoading(false));
+                    },
+                );
+        } catch (err) {
+            dispatch(setLoading(false));
+            dispatch(setError(err.statusCode, 'Failed to fetch weather data'));
+        }
+    };
 
-    try {
-        fetch('http://www.APIurlGOEShere.com/api/things')
-            .then(res => res.json())
-            .then(
-                (jsonResult) => {
-                    dispatch(setData(jsonResult.data));
-                    dispatch(setLoading(false));
-                },
-            );
-    } catch (err) {
-        console.log(err);
-        dispatch(setLoading(false));
-        dispatch(setError(err.statusCode, 'Failed fetch'));
-    }
 };
 
 export default weatherReducer;

@@ -1,11 +1,16 @@
 .return {
     background-color: transparent;
     border: 0 none;
-    font-size: 30px;
-    color: $color-gray-text;
-    padding: 0;
+    background-image: url('images/chevron_left.svg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    height: 46px;
+    width: 26px;
     display: inline-block;
     cursor: pointer;
-    margin: 1px 4rem 0 0;
-    float: left;
+
+    position: absolute;
+    left: 6rem;
+    top: 38px;
 }
