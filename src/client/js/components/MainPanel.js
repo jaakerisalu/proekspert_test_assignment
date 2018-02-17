@@ -50,9 +50,9 @@ class MainPanel extends Component {
     renderFiveDayForecast() {
         // Step 3: Render what we ended up with
         return Object.entries(this.props.fiveDayForecast).map(([day, dayData]) => (
-            <div className="day" key={`fc-${day}`}>
+            <div className="weekly-forecast__day" key={`fc-${day}`}>
                 {day}
-                <i className={MainPanel.getUnspecifiedTimeIcon(dayData.weatherId)} />
+                <i className={`weekly-forecast__day__icon ${MainPanel.getUnspecifiedTimeIcon(dayData.weatherId)}`} />
                 {this.formatTemp(roundedCumulativeMovingAverage(dayData.temp))}{this.formatDegreeSymbol()}
             </div>
         ));
@@ -62,7 +62,7 @@ class MainPanel extends Component {
         return Object.entries(this.props.todaysForecast).map(([partOfDay, temp]) => {
             if (temp) {
                 return (
-                    <div key={`fc-${partOfDay}`}>
+                    <div className="today__forecast__line" key={`fc-${partOfDay}`}>
                         {partOfDay} {this.formatTemp(temp)}{this.formatDegreeSymbol()}
                     </div>
                 );
@@ -80,22 +80,22 @@ class MainPanel extends Component {
         }
 
         return (
-            <Panel classes="main">
+            <Panel classes="panel--main">
                 <MeasurementToggle />
-                <button onClick={(e) => { e.preventDefault(); this.props.togglePanel(); }} className="return" />
-                <h1>{this.props.location.city}</h1>
+                <button onClick={(e) => { e.preventDefault(); this.props.togglePanel(); }} className="button--return" />
+                <h1 className="panel__heading">{this.props.location.city}</h1>
                 <div className="today">
-                    <h2>{moment().format("dddd, MMMM Do YYYY")}</h2>
-                    <h3>{mostRecent.weather[0].description}</h3>
-                    <div className="huge">
+                    <h2 className="today__date">{moment().format("dddd, MMMM Do YYYY")}</h2>
+                    <h3 className="today__weather">{mostRecent.weather[0].description}</h3>
+                    <div className="today__degrees">
                         {this.formatTemp(mostRecent.main.temp)} {this.formatDegreeSymbol()}
                     </div>
-                    <i className={MainPanel.getIcon(mostRecent.weather[0].id)} />
-                    <div className="forecast">
+                    <i className={`today__icon ${MainPanel.getIcon(mostRecent.weather[0].id)}`} />
+                    <div className="today__forecast">
                         {this.renderTodaysForecast()}
                     </div>
                 </div>
-                <div className="future">
+                <div className="weekly-forecast">
                     {this.renderFiveDayForecast()}
                 </div>
             </Panel>

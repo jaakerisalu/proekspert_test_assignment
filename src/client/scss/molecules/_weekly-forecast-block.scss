@@ -1,0 +1,34 @@
+.weekly-forecast {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 10rem;
+
+    color: $color-gray-text;
+    font-size: 2rem;
+
+    &__day {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+
+        &__icon {
+            font-size: 6rem;
+            margin-top: 2rem;
+            margin-bottom: 2rem;
+        }
+    }
+
+    @media (max-width: 450px) {
+        flex-wrap: wrap;
+        justify-content: space-around;
+
+        &__day {
+            flex-direction: row;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+            border-top: 1px solid transparentize($color-orange-text, 0.7);
+        }
+    }
+}

@@ -1,0 +1,71 @@
+.today {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+
+    &__degrees {
+        font-weight: 400;
+        font-size: 15rem;
+        color: $color-orange-text;
+        display: inline-block;
+    }
+
+    &__date,
+    &__weather {
+        width: 100%;
+    }
+
+    &__date {
+        margin-bottom: 2rem;
+    }
+
+    &__weather {
+        margin-top: 0;
+        margin-bottom: 2rem;
+    }
+
+    &__icon {
+        font-size: 16rem;
+        color: $color-orange-text;
+        margin-left: 6rem;
+        margin-right: 6rem;
+    }
+
+    &__forecast {
+        display: inline-block;
+        text-transform: capitalize;
+        font-size: 3rem;
+        color: $color-orange-text;
+
+        &__line:not(:last-child) {
+            margin-bottom: 1rem;
+        }
+
+    }
+
+    @media (max-width: 800px) {
+        &__degrees {
+            font-size: 12rem;
+        }
+
+        &__icon {
+            font-size: 10rem;
+            margin-right: 0;
+        }
+
+        &__forecast {
+            width: 100%;
+        }
+    }
+
+    @media (max-width: 450px) {
+        &__degrees {
+            font-size: 8rem;
+        }
+
+        &__icon {
+            font-size: 6rem;
+        }
+    }
+}

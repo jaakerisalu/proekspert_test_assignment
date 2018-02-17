@@ -38,7 +38,6 @@
     "serve:prod": "node server/main.js",
     "serve:dev": "npm run serve:static",
     "lint": "eslint client/js --ext .jsx --ext .js && eslint server",
-    "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "npm run build:dev & npm run serve:dev"
   },
   "devDependencies": {
