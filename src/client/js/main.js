@@ -1,13 +1,12 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { createStore, applyMiddleware, compose } from 'redux';
-import { Provider } from 'react-redux';
 import { persistStore, persistReducer } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
 import hardSet from 'redux-persist/lib/stateReconciler/hardSet';
 
 import thunk from 'redux-thunk';
-import createLogger from 'redux-logger';
+import { createLogger } from 'redux-logger';
 
 import weatherReducer from './ducks/weather';
 
@@ -35,9 +34,7 @@ function configureStore(reducer) {
         middleware.push(thunk, logger);
     }
 
-    const enhancer = composeEnhancers(
-        applyMiddleware(...middleware),
-    );
+    const enhancer = composeEnhancers(applyMiddleware(...middleware));
 
     return createStore(reducer, enhancer);
 }

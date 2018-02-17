@@ -1,22 +1,20 @@
 const path = require('path');
-const webpack = require('webpack');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const autoprefixer = require('autoprefixer');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 
 // The src/ dir
-const app_root = path.resolve(__dirname, '..');
-const styles_root = path.resolve(app_root, 'scss');
+const appRoot = path.resolve(__dirname, '..');
 
-const js_out_template = '[name].js';
-const styles_out_template = '[name].css';
+const jsOutTemplate = '[name].js';
+const stylesOutTemplate = '[name].css';
 
 
 function makeConfig(options) {
     const output = {
-        path: path.resolve(app_root, '../../dist'),
-        filename: js_out_template,
+        path: path.resolve(appRoot, '../../dist'),
+        filename: jsOutTemplate,
         publicPath: options.publicPath,
         library: 'assignment',
     };
@@ -25,10 +23,10 @@ function makeConfig(options) {
         entry: {
             app: options.prependSources.concat([
                 'babel-polyfill',
-                path.resolve(app_root, 'js', 'main.js'),
+                path.resolve(appRoot, 'js', 'main.js'),
             ]),
             styles: options.prependSources.concat([
-                path.resolve(app_root, 'scss', 'main.js'),
+                path.resolve(appRoot, 'scss', 'main.js'),
             ]),
         },
 
@@ -42,7 +40,7 @@ function makeConfig(options) {
             }, {
                 test: /\.(css|scss)$/,
                 use: ExtractTextPlugin.extract({
-                    use: [{
+                    loader: [{
                         loader: "css-loader",
                         options: {
                             sourceMap: true,
@@ -60,7 +58,7 @@ function makeConfig(options) {
                     }, {
                         loader: "sass-loader",
                         options: {
-                            includePaths: [path.resolve(app_root, 'node_modules', 'bootstrap-sass', 'assets', 'stylesheets')],
+                            includePaths: [path.resolve(appRoot, 'node_modules', 'bootstrap-sass', 'assets', 'stylesheets')],
                             sourceMap: true,
                         },
                     }],
@@ -78,7 +76,7 @@ function makeConfig(options) {
 
         plugins: [
             new ExtractTextPlugin({
-                filename: styles_out_template,
+                filename: stylesOutTemplate,
                 disable: !options.extractCss,
             }),
             new CopyWebpackPlugin([

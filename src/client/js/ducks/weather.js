@@ -81,7 +81,6 @@ const setLoading = status => ({ type: 'SET_LOADING', status });
 const setData = data => ({ type: 'SET_DATA', data });
 export const setMeasurementSystem = system => ({ type: 'SET_SYSTEM', system });
 export const setCoordinates = (lat, lon, city) => ({ type: 'SET_COORDS', lat, lon, city });
-// export const wipeLocation = () => ({ type: 'SET_COORDS', lat: 0, lon: 0, city: "" }); // Debug Action to clear state
 
 export const setCoordinatesWithCity = (lat, lon) => {
     return function (dispatch) {

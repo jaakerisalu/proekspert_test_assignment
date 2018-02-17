@@ -2,14 +2,23 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import moment from "moment";
+
 import Panel from "./Panel";
 import MeasurementToggle from "./MeasurementToggle";
+import Loader from "./Loader";
+
 import { fetchWeatherData } from "../ducks/weather";
+import getTodaysForecast from "../utils/getTodaysForecast";
+import getFiveDayForecast from "../utils/getFiveDayForecast";
+import celsiusToFahrenheit from "../utils/celsiusToFahrenheit";
+import roundedCumulativeMovingAverage from "../utils/roundedCumulativeMovingAverage";
 
 const mapStateToProps = state => ({
     system: state.measurementSystem,
     location: state.location,
-    weatherData: state.weatherData,
+    todaysForecast: getTodaysForecast(state.weatherData),
+    fiveDayForecast: getFiveDayForecast(state.weatherData),
+    mostRecentDatapoint: state.weatherData[0],
 });
 
 @connect(mapStateToProps, { fetchWeatherData })
@@ -17,7 +26,6 @@ class MainPanel extends Component {
     componentDidMount() {
         const { lat, lon } = this.props.location;
         if (lat && lon) {
-            console.log('DOING THE FETCH', lat, lon);
             this.props.fetchWeatherData(lat, lon);
         }
     }
@@ -31,47 +39,29 @@ class MainPanel extends Component {
         return `wi wi-owm-${weatherId}`;
     }
 
-    getPartOfDay(hour) {
-        // Consider morning to be 03 -> 06, day to be 09 -> 12, evening to be 15 -> 18, night to be 21 -> 00
-        const legend = {
-            0: 'night',
-            3: 'morning',
-            6: 'morning',
-            9: 'day',
-            12: 'day',
-            15: 'evening',
-            18: 'evening',
-            21: 'night',
-        };
-
-        return legend[parseInt(hour, 10)];
+    formatDegreeSymbol() {
+        return `°${this.props.system === 'c' ? 'C' : 'F'}`;
     }
 
-    getTodaysForecast() {
-        const forecast = {
-            morning: null,
-            day: null,
-            evening: null,
-            night: null,
-        };
+    formatTemp(deg) {
+        return Math.round(this.props.system === 'c' ? deg : celsiusToFahrenheit(deg));
+    }
 
-        // Step 1: Find the relevant datapoins (from times that are still to come today)
-        const relevantDatapoints = this.props.weatherData.filter(
-            dataPoint => moment.unix(dataPoint.dt).utc().format('DD') === moment().utc().format('DD'));
-
-        // Step 2: Match the datapoints to subjectiv 'parts of day'
-        relevantDatapoints.forEach((dp) => {
-            const pod = this.getPartOfDay(moment.unix(dp.dt).utc().format('H'));  // part of day
-            if (!forecast[pod]) {
-                forecast[pod] = dp.main.temp;
-            } else {  // If I get 2 datapoints for one part of day, take the average
-                // Average the 2 datapoints together
-                forecast[pod] = (forecast[pod] + dp.main.temp) / 2;
-            }
-        });
-
+    renderFiveDayForecast() {
         // Step 3: Render what we ended up with
-        return Object.entries(forecast).map(([partOfDay, temp]) => {
+        return Object.entries(this.props.fiveDayForecast).map(([day, dayData]) => {
+            return (
+                <div className="day" key={`fc-${day}`}>
+                    {day}
+                    <i className={this.getUnspecifiedTimeIcon(dayData.weatherId)} />
+                    {this.formatTemp(roundedCumulativeMovingAverage(dayData.temp))}{this.formatDegreeSymbol()}
+                </div>
+            );
+        });
+    }
+
+    renderTodaysForecast() {
+        return Object.entries(this.props.todaysForecast).map(([partOfDay, temp]) => {
             if (temp) {
                 return (
                     <div key={`fc-${partOfDay}`}>{partOfDay} {this.formatTemp(temp)}{this.formatDegreeSymbol()}</div>
@@ -82,60 +72,12 @@ class MainPanel extends Component {
         });
     }
 
-    getFiveDayForecast() {
-        // Step 1: Find the relevant datapoins (from times that are NOT from today)
-        const relevantDatapoints = this.props.weatherData.filter(
-            dataPoint => moment.unix(dataPoint.dt).utc().format('DD') !== moment().utc().format('DD'));
-
-        const data = {};
-        // Step 2: Group the datapoints by day, average out the temperature, pick an icon somehow I guess?
-        relevantDatapoints.forEach((dp) => {
-            // Since we have < week of data I can just use the day as key, no conflicts
-            const dayOfWeek = moment.unix(dp.dt).utc().format('dddd');
-            if (!data[dayOfWeek]) {
-                data[dayOfWeek] = { temp: [dp.main.temp], weatherId: dp.weather[0].id };  // WeatherId used for icon
-            } else {  // If I get more datapoints for a day, average the temperatures
-                // Try to get a weatherId as close to 15:00 as possible as what I consider a good baseline
-                data[dayOfWeek].temp.push(dp.main.temp);
-
-                // Datapoints are sorted by time, so it's always 3 o clock -> 6 o clock -> 9 o clock etc
-                if (parseInt(moment.unix(dp.dt).utc().format('H'), 10) <= 15) {
-                    // Overwrite the old one since this comes later in the day, but not after 3 PM
-                    data[dayOfWeek].weatherId = dp.weather[0].id;
-                }
-            }
-        });
-
-        // Step 3: Render what we ended up with
-        return Object.entries(data).map(([day, dayData]) => {
-            return (
-                <div className="day" key={`fc-${day}`}>
-                    {day}
-                    <i className={this.getUnspecifiedTimeIcon(dayData.weatherId)} />
-                    {this.formatTemp(this.roundedCumulativeMovingAverage(dayData.temp))}{this.formatDegreeSymbol()}
-                </div>
-            );
-        });
-    }
-
-    formatDegreeSymbol() {
-        return `°${this.props.system === 'c' ? 'C' : 'F'}`;
-    }
-
-    formatTemp(deg) {
-        return Math.round(this.props.system === 'c' ? deg : this.celsiusToFahrenheit(deg));
-    }
-
-    celsiusToFahrenheit(deg) {
-        return (deg * (9 / 5)) + 32;
-    }
-
-    roundedCumulativeMovingAverage(arr) {
-        return Math.round(arr.reduce((a, b) => a + b, 0) / arr.length);
-    }
-
     render() {
-        const mostRecent = this.props.weatherData[0];
+        const mostRecent = this.props.mostRecentDatapoint;
+
+        if (!mostRecent) {
+            return (<Loader />);
+        }
 
         return (
             <Panel classes="main">
@@ -150,11 +92,11 @@ class MainPanel extends Component {
                     </div>
                     <i className={this.getIcon(mostRecent.weather[0].id)} />
                     <div className="forecast">
-                        {this.getTodaysForecast()}
+                        {this.renderTodaysForecast()}
                     </div>
                 </div>
                 <div className="future">
-                    {this.getFiveDayForecast()}
+                    {this.renderFiveDayForecast()}
                 </div>
             </Panel>
         );
@@ -168,7 +110,25 @@ MainPanel.propTypes = {
         lat: PropTypes.number,
         lon: PropTypes.number,
     }),
-    weatherData: PropTypes.arrayOf(PropTypes.shape()),
+    todaysForecast: PropTypes.shape({
+        morning: PropTypes.number,
+        day: PropTypes.number,
+        evening: PropTypes.number,
+        night: PropTypes.number,
+    }),
+    mostRecentDatapoint: PropTypes.shape({
+        main: PropTypes.shape({
+            temp: PropTypes.number,
+        }),
+        weather: PropTypes.arrayOf(PropTypes.shape({
+            description: PropTypes.string,
+            id: PropTypes.number,
+        })),
+    }),
+    fiveDayForecast: PropTypes.objectOf(PropTypes.shape({
+        temp: PropTypes.arrayOf(PropTypes.number),
+        weatherId: PropTypes.number,
+    })),
     fetchWeatherData: PropTypes.func,
     togglePanel: PropTypes.func.isRequired,
 };
@@ -176,7 +136,14 @@ MainPanel.propTypes = {
 MainPanel.defaultProps = {
     system: 'f',
     location: { city: "Unknown", lat: 0, lon: 0 },
-    weatherData: [],
+    todaysForecast: {
+        morning: null,
+        day: null,
+        evening: null,
+        night: null,
+    },
+    fiveDayForecast: {},
+    mostRecentDatapoint: null,
     fetchWeatherData: () => {},  // no-op
 };
 

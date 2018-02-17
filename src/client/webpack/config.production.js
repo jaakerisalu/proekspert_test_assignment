@@ -1,5 +1,3 @@
-const webpack = require('webpack');
-
 const makeConfig = require('./config.base');
 
 const config = makeConfig({
@@ -14,7 +12,6 @@ const config = makeConfig({
 
     plugins: [],
 });
-console.log("Using PRODUCTION config");
 
 
 module.exports = config;
