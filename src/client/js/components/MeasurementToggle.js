@@ -11,20 +11,18 @@ const mapDispatchToProps = dispatch => ({
     setSystem: selection => dispatch(setMeasurementSystem(selection)),
 });
 
-const MeasurementToggle = ({ system, setSystem }) => {
-    return (
-        <div className="toggler">
-            <input type="checkbox" id="toggle_measurement_system" checked={system === 'c'} readOnly />
-            <div className="toggle" onClick={() => setSystem(system === 'c' ? 'f' : 'c')}>
-                <label htmlFor="toggle_measurement_system">
-                    <i />
-                    <span className="c">℃</span>
-                    <span className="f">℉</span>
-                </label>
-            </div>
-        </div>
-    );
-};
+const MeasurementToggle = ({ system, setSystem }) => (
+    <div className="toggler">
+        <input type="checkbox" id="toggle_measurement_system" checked={system === 'c'} readOnly />
+        <button className="toggler__body" onClick={() => setSystem(system === 'c' ? 'f' : 'c')}>
+            <label className="toggler__slider" htmlFor="toggle_measurement_system">
+                <span className="slider__knob" />
+                <span className="slider__degrees--c">℃</span>
+                <span className="slider__degrees--f">℉</span>
+            </label>
+        </button>
+    </div>
+);
 
 MeasurementToggle.propTypes = {
     setSystem: PropTypes.func.isRequired,

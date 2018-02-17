@@ -23,9 +23,8 @@ class LocationPanel extends Component {
     }
 
     setGeoLocation() {
-        this.props.setCoords(this.props.coords.latitude, this.props.coords.longitude).then(
-            () => this.props.togglePanel(),
-        );
+        this.props.setCoords(this.props.coords.latitude, this.props.coords.longitude)
+            .then(() => this.props.togglePanel());
     }
 
     setGooglePlacesLocation = (address) => {
@@ -33,9 +32,7 @@ class LocationPanel extends Component {
             .then(results => getLatLng(results[0]))
             .then((latLng) => {
                 this.setState({ error: '' });
-                this.props.setCoords(latLng.lat, latLng.lng).then(
-                    () => this.props.togglePanel(),
-                );
+                this.props.setCoords(latLng.lat, latLng.lng).then(() => this.props.togglePanel());
             })
             .catch(error => this.setState({ error }));
     };
@@ -46,7 +43,7 @@ class LocationPanel extends Component {
 
     render() {
         return (
-            <Panel classes="location">
+            <Panel classes="panel--location">
                 {this.state.error ?
                     <div className="places-error">
                         Unable to get coordinates, try a different place
@@ -72,12 +69,21 @@ class LocationPanel extends Component {
                             !this.props.isGeolocationEnabled ?
                                 <div>I&apos;m afraid you&apos;ve disabled geolocation</div> :
                                 this.props.coords ?
-                                    <div className="use-geolocation">
-                                        use my <span onClick={() => this.setGeoLocation()}>current position</span>
+                                    <div className="geolocation__text">
+                                        use my
+                                        <button
+                                            className="geolocation__text__button"
+                                            onClick={() => this.setGeoLocation()}
+                                        >
+                                            current position
+                                        </button>
                                     </div> :
-                                    <div className="use-geolocation">
-                                        use my <span className="disabled">current position</span>
-                                        <div className="geo-error">(Unable to get your position)</div>
+                                    <div className="geolocation__text">
+                                        use my
+                                        <span className="geolocation__text__button--disabled">
+                                            current position
+                                        </span>
+                                        <div className="geolocation__text__error">(Unable to get your position)</div>
                                     </div>
                     }
                 </div>

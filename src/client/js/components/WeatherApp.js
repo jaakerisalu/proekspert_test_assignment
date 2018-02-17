@@ -15,7 +15,7 @@ class WeatherApp extends Component {
             lat: PropTypes.number,
             lon: PropTypes.number,
             city: PropTypes.string,
-        }).isRequired,
+        }),
     };
 
     static defaultProps = {

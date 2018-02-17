@@ -3,17 +3,24 @@
     font-size: 3rem;
     text-align: center;
 
-    .use-geolocation {
-        span {
-            border-bottom: 2px dashed #CBCBCB;
+    &__text {
+        &__button {
             cursor: pointer;
+            background: transparent;
+            border: 0 none;
+            border-bottom: 2px dashed #CBCBCB;
+            font-size: 3rem;
+            color: $color-gray-text;
+            margin-left: 5px;
+            padding: 0;
 
-            &.disabled {
+            &--disabled {
                 cursor: not-allowed;
+                margin-left: 5px;
             }
         }
 
-        .geo-error {
+        &__error {
             font-size: 2rem;
             color: $color-gray-text-muted;
         }

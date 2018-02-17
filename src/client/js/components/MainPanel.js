@@ -23,20 +23,20 @@ const mapStateToProps = state => ({
 
 @connect(mapStateToProps, { fetchWeatherData })
 class MainPanel extends Component {
+    static getIcon(weatherId, time = null) {
+        const hour = time || parseInt(moment().format('H'), 10); // Use preset hour or 'now'
+        return `wi wi-owm-${hour > 6 && hour < 18 ? 'day' : 'night'}-${weatherId}`;
+    }
+
+    static getUnspecifiedTimeIcon(weatherId) {
+        return `wi wi-owm-${weatherId}`;
+    }
+
     componentDidMount() {
         const { lat, lon } = this.props.location;
         if (lat && lon) {
             this.props.fetchWeatherData(lat, lon);
         }
-    }
-
-    getIcon(weatherId, time = null) {
-        const hour = time || parseInt(moment().format('H'), 10); // Use preset hour or 'now'
-        return `wi wi-owm-${hour > 6 && hour < 18 ? 'day' : 'night'}-${weatherId}`;
-    }
-
-    getUnspecifiedTimeIcon(weatherId) {
-        return `wi wi-owm-${weatherId}`;
     }
 
     formatDegreeSymbol() {
@@ -49,22 +49,22 @@ class MainPanel extends Component {
 
     renderFiveDayForecast() {
         // Step 3: Render what we ended up with
-        return Object.entries(this.props.fiveDayForecast).map(([day, dayData]) => {
-            return (
-                <div className="day" key={`fc-${day}`}>
-                    {day}
-                    <i className={this.getUnspecifiedTimeIcon(dayData.weatherId)} />
-                    {this.formatTemp(roundedCumulativeMovingAverage(dayData.temp))}{this.formatDegreeSymbol()}
-                </div>
-            );
-        });
+        return Object.entries(this.props.fiveDayForecast).map(([day, dayData]) => (
+            <div className="day" key={`fc-${day}`}>
+                {day}
+                <i className={MainPanel.getUnspecifiedTimeIcon(dayData.weatherId)} />
+                {this.formatTemp(roundedCumulativeMovingAverage(dayData.temp))}{this.formatDegreeSymbol()}
+            </div>
+        ));
     }
 
     renderTodaysForecast() {
         return Object.entries(this.props.todaysForecast).map(([partOfDay, temp]) => {
             if (temp) {
                 return (
-                    <div key={`fc-${partOfDay}`}>{partOfDay} {this.formatTemp(temp)}{this.formatDegreeSymbol()}</div>
+                    <div key={`fc-${partOfDay}`}>
+                        {partOfDay} {this.formatTemp(temp)}{this.formatDegreeSymbol()}
+                    </div>
                 );
             }
 
@@ -90,7 +90,7 @@ class MainPanel extends Component {
                     <div className="huge">
                         {this.formatTemp(mostRecent.main.temp)} {this.formatDegreeSymbol()}
                     </div>
-                    <i className={this.getIcon(mostRecent.weather[0].id)} />
+                    <i className={MainPanel.getIcon(mostRecent.weather[0].id)} />
                     <div className="forecast">
                         {this.renderTodaysForecast()}
                     </div>
@@ -144,7 +144,7 @@ MainPanel.defaultProps = {
     },
     fiveDayForecast: {},
     mostRecentDatapoint: null,
-    fetchWeatherData: () => {},  // no-op
+    fetchWeatherData: () => {}, // no-op
 };
 
 export default MainPanel;

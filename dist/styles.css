@@ -2603,23 +2603,26 @@ p {
   display: none;
 }
 
-.toggler .toggle {
+.toggler__body {
   position: absolute;
   top: 40px;
   right: 32px;
   margin: auto;
   width: 80px;
   height: 28px;
+  background: transparent;
+  border: 0 none;
+  padding: 0;
 }
 
-.toggler .toggle label,
-.toggler .toggle i {
+.toggler__body .toggler__slider,
+.toggler__body .slider__knob {
   box-sizing: border-box;
   display: block;
   background: #ffffff;
 }
 
-.toggler .toggle label {
+.toggler__body .toggler__slider {
   width: 100%;
   height: 100%;
   border-radius: 32px;
@@ -2627,7 +2630,7 @@ p {
   transition: all 0.30s ease;
 }
 
-.toggler .toggle i {
+.toggler__body .slider__knob {
   position: absolute;
   top: 2px;
   left: 2px;
@@ -2639,22 +2642,22 @@ p {
   transition: all 0.3s cubic-bezier(0.275, -0.45, 0.725, 1.45);
 }
 
-.toggler .toggle .f {
+.toggler__body .slider__degrees--f {
   display: block;
   position: absolute;
   right: 12px;
   opacity: 1;
 }
 
-.toggler .toggle .c {
+.toggler__body .slider__degrees--c {
   display: block;
   position: absolute;
   left: 12px;
   opacity: 0;
 }
 
-.toggler .toggle .c,
-.toggler .toggle .f {
+.toggler__body .slider__degrees--c,
+.toggler__body .slider__degrees--f {
   font-size: 12px;
   font-weight: bold;
   transition: opacity 0.1s;
@@ -2662,31 +2665,31 @@ p {
   top: 7px;
 }
 
-.toggler input[type="checkbox"]:active + .toggle i {
+.toggler input[type="checkbox"]:active + .toggler__body .slider__knob {
   width: 35px;
 }
 
-.toggler input[type="checkbox"]:active + .toggle label {
+.toggler input[type="checkbox"]:active + .toggler__body .toggler__slider {
   border: 14px solid #e5e5e5;
 }
 
-.toggler input[type="checkbox"]:checked + .toggle i {
+.toggler input[type="checkbox"]:checked + .toggler__body .slider__knob {
   left: 48px;
 }
 
-.toggler input[type="checkbox"]:checked + .toggle .f {
+.toggler input[type="checkbox"]:checked + .toggler__body .slider__degrees--f {
   opacity: 0;
 }
 
-.toggler input[type="checkbox"]:checked + .toggle .c {
+.toggler input[type="checkbox"]:checked + .toggler__body .slider__degrees--c {
   opacity: 1;
 }
 
-.toggler input[type="checkbox"]:checked:active + .toggle i {
+.toggler input[type="checkbox"]:checked:active + .toggle .slider__knob {
   left: 40px;
 }
 
-.toggler input[type="checkbox"]:checked:active + .toggle label {
+.toggler input[type="checkbox"]:checked:active + .toggle .toggler__slider {
   border: 14px solid #e5e5e5;
 }
 
@@ -2696,16 +2699,23 @@ p {
   text-align: center;
 }
 
-.geolocation .use-geolocation span {
-  border-bottom: 2px dashed #CBCBCB;
+.geolocation__text__button {
   cursor: pointer;
+  background: transparent;
+  border: 0 none;
+  border-bottom: 2px dashed #CBCBCB;
+  font-size: 3rem;
+  color: #536066;
+  margin-left: 5px;
+  padding: 0;
 }
 
-.geolocation .use-geolocation span.disabled {
+.geolocation__text__button--disabled {
   cursor: not-allowed;
+  margin-left: 5px;
 }
 
-.geolocation .use-geolocation .geo-error {
+.geolocation__text__error {
   font-size: 2rem;
   color: #536167;
 }
@@ -2753,7 +2763,7 @@ p {
   position: relative;
 }
 
-.panel.location {
+.panel.panel--location {
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -2766,7 +2776,7 @@ p {
 }
 
 @media (max-width: 1000px) {
-  .panel.location {
+  .panel.panel--location {
     width: auto;
   }
 }

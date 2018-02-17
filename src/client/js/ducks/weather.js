@@ -1,6 +1,6 @@
 /* global google */
 
-const OPEN_WEATHER_MAP_API_KEY = '51f38e774e8c2d2ddb78eed08bffdefa';  // Wouldn't do this in prod
+const OPEN_WEATHER_MAP_API_KEY = '51f38e774e8c2d2ddb78eed08bffdefa'; // Wouldn't do this in prod
 
 const initialState = {
     isLoading: true,
@@ -34,7 +34,6 @@ const getCity = (latitude, longitude) => {
             },
         );
     });
-
 };
 
 const weatherReducer = (state = initialState, action) => {
@@ -80,44 +79,41 @@ const setError = (statusCode, message) => ({ type: 'SET_ERROR', statusCode, mess
 const setLoading = status => ({ type: 'SET_LOADING', status });
 const setData = data => ({ type: 'SET_DATA', data });
 export const setMeasurementSystem = system => ({ type: 'SET_SYSTEM', system });
-export const setCoordinates = (lat, lon, city) => ({ type: 'SET_COORDS', lat, lon, city });
+export const setCoordinates = (lat, lon, city) => ({
+    type: 'SET_COORDS', lat, lon, city,
+});
 
-export const setCoordinatesWithCity = (lat, lon) => {
-    return function (dispatch) {
-        dispatch(setLoading(true));
-        return getCity(lat, lon).then(
-            (cityName) => {
-                dispatch(setCoordinates(lat, lon, cityName));
-                dispatch(setLoading(false));
-            },
-            (error) => {
-                dispatch(setError(error.statusCode, 'Failed to get city name'));
-                dispatch(setLoading(false));
-            },
-        );
-    };
+/* eslint func-names: ["error", "as-needed"] */
+
+export const setCoordinatesWithCity = (lat, lon) => function _(dispatch) {
+    dispatch(setLoading(true));
+    return getCity(lat, lon).then(
+        (cityName) => {
+            dispatch(setCoordinates(lat, lon, cityName));
+            dispatch(setLoading(false));
+        },
+        (error) => {
+            dispatch(setError(error.statusCode, 'Failed to get city name'));
+            dispatch(setLoading(false));
+        },
+    );
 };
 
-export const fetchWeatherData = (lat, lon) => {
-    return function (dispatch) {
-        dispatch(setLoading(true));
-        try {
-            const apiUrl = 'http://api.openweathermap.org/data/2.5/forecast' +
+export const fetchWeatherData = (lat, lon) => function _(dispatch) {
+    dispatch(setLoading(true));
+    try {
+        const apiUrl = 'http://api.openweathermap.org/data/2.5/forecast' +
                 `?lat=${lat}&lon=${lon}&APPID=${OPEN_WEATHER_MAP_API_KEY}&units=metric`;
-            fetch(apiUrl)
-                .then(res => res.json())
-                .then(
-                    (jsonResult) => {
-                        dispatch(setData(jsonResult.list));
-                        dispatch(setLoading(false));
-                    },
-                );
-        } catch (err) {
-            dispatch(setLoading(false));
-            dispatch(setError(err.statusCode, 'Failed to fetch weather data'));
-        }
-    };
-
+        fetch(apiUrl)
+            .then(res => res.json())
+            .then((jsonResult) => {
+                dispatch(setData(jsonResult.list));
+                dispatch(setLoading(false));
+            });
+    } catch (err) {
+        dispatch(setLoading(false));
+        dispatch(setError(err.statusCode, 'Failed to fetch weather data'));
+    }
 };
 
 export default weatherReducer;

@@ -58,7 +58,9 @@ function makeConfig(options) {
                     }, {
                         loader: "sass-loader",
                         options: {
-                            includePaths: [path.resolve(appRoot, 'node_modules', 'bootstrap-sass', 'assets', 'stylesheets')],
+                            includePaths: [
+                                path.resolve(appRoot, 'node_modules', 'bootstrap-sass', 'assets', 'stylesheets'),
+                            ],
                             sourceMap: true,
                         },
                     }],

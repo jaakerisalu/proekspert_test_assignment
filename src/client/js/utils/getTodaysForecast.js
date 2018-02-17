@@ -25,15 +25,15 @@ const getTodaysForecast = (rawData) => {
     };
 
     // Step 1: Find the relevant datapoins (from times that are still to come today)
-    const relevantDatapoints = rawData.filter(
-        dataPoint => moment.unix(dataPoint.dt).utc().format('DD') === moment().utc().format('DD'));
+    const relevantDatapoints = rawData.filter(dataPoint =>
+        moment.unix(dataPoint.dt).utc().format('DD') === moment().utc().format('DD'));
 
     // Step 2: Match the datapoints to subjectiv 'parts of day'
     relevantDatapoints.forEach((dp) => {
-        const pod = getPartOfDay(moment.unix(dp.dt).utc().format('H'));  // part of day
+        const pod = getPartOfDay(moment.unix(dp.dt).utc().format('H')); // part of day
         if (!forecast[pod]) {
             forecast[pod] = dp.main.temp;
-        } else {  // If I get 2 datapoints for one part of day, take the average
+        } else { // If I get 2 datapoints for one part of day, take the average
             // Average the 2 datapoints together
             forecast[pod] = (forecast[pod] + dp.main.temp) / 2;
         }
